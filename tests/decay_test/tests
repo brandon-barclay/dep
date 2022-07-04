@@ -1,0 +1,7 @@
+[Tests]
+  [decay_test]
+    type = 'Exodiff'
+    input = 'decay_test.i'
+    exodiff = 'decay_test_out.e'
+  []
+[]
