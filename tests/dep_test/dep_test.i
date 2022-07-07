@@ -24,29 +24,22 @@
 
 [ICs]
   [ic_concentration]
-    type = ConstantIC
+    type = FunctionIC
     variable = concentration
-    value = 0
+    function = init_condition_function
   []
 []
 
 [Kernels]
-  [advection]
-    type = ConservativeAdvection
-    variable = concentration
-    velocity = '0.3 0.3 -0.001'
-  []
-  [diffusion]
-    type = ADDiffusion
-    variable = concentration
-  []
-  [decay]
-    type = ADDecay
-    variable = concentration
-  []
   [Time]
     type = MassLumpedTimeDerivative
     variable = concentration
+  []
+  [grav_settling]
+    type = ConservativeAdvection
+    variable = concentration
+    velocity = '0 0 -1.0'
+    upwinding_type = 'full'
   []
 []
 
@@ -57,39 +50,21 @@
     concentration = concentration
     execute_on = timestep_end
     deposition_velocity = 0.01
-    boundary = 'bottom'
+    boundary = 'back'
   []
 []
 
 [Functions]
-  [./switch_off]
+  [init_condition_function]
     type = ParsedFunction
-    value = 'if(t < 1.0001, 1000, 0)'
-  [../]
-[]
-
-[DiracKernels]
-  [./point_source]
-    type = FunctionDiracSource
-    variable = concentration
-    function = switch_off
-    point = '10 20 0'
-  [../]
-[]
-
-[BCs]
-  [bottom]
-    type = DryDepositionBC
-    variable = concentration
-    boundary = 'bottom'
-    dry_deposition_velocity = 0.01
+    value = 'if( z > 95.0 , 100.0 , 0.0)'
   []
 []
 
 [Materials]
   [Air]
     type = Air
-    settling_velocity = -0.01
+    settling_velocity = 1.0
     decay_constant = 0.01
   []
 []
@@ -97,8 +72,8 @@
 [Executioner]
   type = Transient
   solve_type = 'NEWTON'
-  num_steps = 300
-  dt = 1
+  num_steps = 150
+  dt = 1.0
   petsc_options_iname = '-pc_type -pc_hypre_type'
   petsc_options_value = 'hypre boomeramg'
 []

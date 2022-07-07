@@ -27,10 +27,7 @@ Air::Air(const InputParameters & params)
     _settling_velocity(declareProperty<Real>("settling_velocity")),
     _wet_scavenge_constant(declareProperty<Real>("wet_scavenge_constant"))
 {
-  if (getParam<Real>("settling_velocity") > 0)
-  {
-    mooseError("settling_velocity must be negative");
-  }
+
 }
 
 void

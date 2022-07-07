@@ -1,13 +1,15 @@
 [Mesh]
   type = GeneratedMesh
-  dim = 2
+  dim = 3
   xmin = 0
   xmax = 1
   ymin = 0
   ymax = 1
+  zmin = 0
+  zmax = 1
   nx = 10
   ny = 10
-  elem_type = QUAD9
+  nz = 10
 []
 
 [Variables]
@@ -40,13 +42,14 @@
 [Materials]
   [Air]
     type = Air
+    decay_constant = 0.05
   []
 []
 
 [Executioner]
   type = Transient
   solve_type = 'NEWTON'
-  num_steps = 3
+  num_steps = 10
   dt = 1
 []
 

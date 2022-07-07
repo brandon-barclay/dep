@@ -23,7 +23,8 @@ DepositionAux::DepositionAux(const InputParameters & params)
 Real
 DepositionAux::computeValue()
 {
-      //_deposited += _concentration[_qp] *  _deposition_velocity;
-      return         _deposited + _concentration[_qp] *  _deposition_velocity ;
+      auto res = _concentration[_qp] *  _deposition_velocity;
+      if( res > 0) {_deposited += res; }
+      return _deposited ;
 
 }
