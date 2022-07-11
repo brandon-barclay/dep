@@ -1,0 +1,7 @@
+[Tests]
+  [grav_settling_test]
+    type = 'Exodiff'
+    input = 'grav_settling_test.i'
+    exodiff = 'grav_settling_test_out.e'
+  []
+[]

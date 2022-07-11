@@ -24,7 +24,8 @@ Real
 DepositionAux::computeValue()
 {
       auto res = _concentration[_qp] *  _deposition_velocity;
-      if( res > 0) {_deposited += res; }
-      return _deposited ;
+      if( res > 0 ) { _deposited += res; }
+      //return _deposited ;
+      return res;
 
 }

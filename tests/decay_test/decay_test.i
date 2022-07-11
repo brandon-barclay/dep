@@ -42,7 +42,7 @@
 [Materials]
   [Air]
     type = Air
-    decay_constant = 0.05
+    decay_constant = 0.1
   []
 []
 

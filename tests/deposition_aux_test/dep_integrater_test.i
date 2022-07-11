@@ -20,7 +20,7 @@
 [AuxVariables]
   [deposition]
     initial_condition = 0
-    boundary = 'back bottom front '
+    #boundary = 'top bottom front back left right'
   []
 []
 
@@ -59,12 +59,12 @@
 
 [AuxKernels]
   [deposition_aux]
-    type = DepositionAux
+    type = VariableTimeIntegrationAux
+    variable_to_integrate = concentration
+    coefficient = 0.01
     variable = deposition
-    concentration = concentration
-    execute_on = timestep_end
-    deposition_velocity = 0.1
-    boundary = 'back bottom front'
+    order = 2
+    #boundary = 'top bottom front back left right'
   []
 []
 
@@ -89,7 +89,7 @@
     type = DryDepositionBC
     variable = concentration
     boundary = 'bottom'
-    dry_deposition_velocity = 0.1
+    dry_deposition_velocity = 0.01
   []
 []
 

@@ -17,11 +17,6 @@
   []
 []
 
-[AuxVariables]
-  [deposition]
-  []
-[]
-
 [ICs]
   [ic_concentration]
     type = FunctionIC
@@ -43,17 +38,6 @@
   []
 []
 
-[AuxKernels]
-  [deposition_aux]
-    type = DepositionAux
-    variable = deposition
-    concentration = concentration
-    execute_on = timestep_end
-    deposition_velocity = 0.01
-    boundary = 'back'
-  []
-[]
-
 [Functions]
   [init_condition_function]
     type = ParsedFunction
@@ -72,7 +56,7 @@
 [Executioner]
   type = Transient
   solve_type = 'NEWTON'
-  num_steps = 150
+  num_steps = 5
   dt = 1.0
   petsc_options_iname = '-pc_type -pc_hypre_type'
   petsc_options_value = 'hypre boomeramg'

@@ -20,7 +20,7 @@
 [AuxVariables]
   [deposition]
     initial_condition = 0
-    boundary = 'back bottom front '
+    #boundary = 'top bottom front back left right'
   []
 []
 
@@ -64,7 +64,7 @@
     concentration = concentration
     execute_on = timestep_end
     deposition_velocity = 0.1
-    boundary = 'back bottom front'
+    #boundary = 'top bottom front back left right'
   []
 []
 
