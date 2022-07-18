@@ -1,5 +1,6 @@
 #pragma once
 #include "Material.h"
+#include <vector>
 
 class Air : public Material
 {
@@ -9,6 +10,8 @@ class Air : public Material
 protected:
   virtual void computeQpProperties() override;
 
+  MaterialProperty<RealVectorValue> & _velocity;
+
   MaterialProperty<Real> & _diffusivity;
 
   MaterialProperty<Real> & _decay_constant;
@@ -16,4 +19,6 @@ protected:
   MaterialProperty<Real> & _settling_velocity;
 
   MaterialProperty<Real> & _wet_scavenge_constant;
+
+  std::vector<std::vector<double>> _wind_data;
 };

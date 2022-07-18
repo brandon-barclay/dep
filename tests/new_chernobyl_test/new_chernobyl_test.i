@@ -1,15 +1,17 @@
 [Mesh]
-  type = GeneratedMesh
+  [box]
+  type = GeneratedMeshGenerator
   dim = 3
-  nx = 100
-  ny = 100
-  nz = 5
-  xmin = 222500.0
-  xmax = 242500.0
-  ymin = 222500.0
-  ymax = 242500.0
+  nx = 50
+  ny = 50
+  nz = 50
+  xmin = 0
+  xmax = 10000
+  ymin = 0
+  ymax = 10000
   zmin = 0.0
-  zmax = 11322.0
+  zmax = 10000
+  []
 []
 
 [Variables]
@@ -27,7 +29,6 @@
 [AuxVariables]
   [deposition]
     initial_condition = 0 # no deposition initially
-    boundary = '1'
   []
 []
 
@@ -72,8 +73,8 @@
     variable = cs137
     type = PieceWisePointSource
     rates = '1.1e11 0' # in Bq/m^3? In mol/m^3?
-    activation_times = '0.0 12000'
-    point = '232500.0 232500.0 35'
+    activation_times = '0.0 12000' # minutes
+    point = '5000 5000 35'
   []
 []
 
@@ -87,8 +88,7 @@
     type = ADDepositionBC
     variable = cs137
     boundary = '1'
-    settling_velocity = 0.001 # in meters/minute
-    outputs = exodus
+    settling_velocity = 0.001 # in meters per minute
   []
 []
 
@@ -101,7 +101,7 @@
     dim_file_name = coords.csv
     diffusivity = 1.0 # needs to be in meters
     decay_constant = 7.285e-10 # needs to be in minutes
-    settling_velocity = -0.001 # needs to be in meters/minute
+    settling_velocity = -0.001 # needs to be in meters per minute
     outputs = exodus
   []
 []

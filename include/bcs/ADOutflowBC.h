@@ -1,12 +1,11 @@
 #pragma once
 #include "ADIntegratedBC.h"
 
-class ADDepositionBC : public ADIntegratedBC
+class ADOutflowBC : public ADIntegratedBC
 {
 public:
   static InputParameters validParams();
-  ADDepositionBC(const InputParameters & params);
+  ADOutflowBC(const InputParameters & params);
 protected:
   virtual ADReal computeQpResidual();
-  const Real _settling_velocity;
 };

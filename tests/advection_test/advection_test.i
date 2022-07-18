@@ -26,35 +26,23 @@
 []
 
 [Kernels]
-  [Time]
-    type = MassLumpedTimeDerivative
+  [Decay]
+    type = STAdvection
     variable = concentration
   []
-  [diffusion]
-    type = ADHeatConduction
+  [Time]
+    type = MassLumpedTimeDerivative
     variable = concentration
   []
 []
 
 [BCs]
-  [bottom_deposition]
-    type = ADDepositionBC
-    variable = concentration
-    boundary = 'bottom'
-    settling_velocity = 0.001
-  []
 []
 
 [Materials]
   [Air]
     type = Air
     decay_constant = 0.1
-    settling_velocity = 0.1
-  []
-  [generic]
-    type = ADGenericConstantMaterial
-    prop_names = 'thermal_conductivity'
-    prop_values = '0.005'
   []
 []
 

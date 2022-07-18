@@ -1,0 +1,7 @@
+[Tests]
+  [deposition_bc_test]
+    type = 'Exodiff'
+    input = 'deposition_bc_test.i'
+    exodiff = 'deposition_bc_test_out.e'
+  []
+[]

@@ -1,0 +1,7 @@
+[Tests]
+  [deposition_aux_test]
+    type = 'Exodiff'
+    input = 'deposition_aux_test.i'
+    exodiff = 'deposition_aux_test_out.e'
+  []
+[]
