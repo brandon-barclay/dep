@@ -1,0 +1,7 @@
+[Tests]
+  [time_dependent_velocity_test]
+    type = 'Exodiff'
+    input = 'time_dependant_velocity_test.i'
+    exodiff = 'time_dependant_velocity_test_out.e'
+  []
+[]

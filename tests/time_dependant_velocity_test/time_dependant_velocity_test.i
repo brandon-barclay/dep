@@ -1,16 +1,16 @@
 [Mesh]
-  [Mesh]
-    type = GeneratedMesh
-    dim = 3
-    nx = 100
-    ny = 100
-    nz = 5
-    xmin = 222500.0
-    xmax = 242500.0
-    ymin = 222500.0
-    ymax = 242500.0
-    zmin = 0.0
-    zmax = 11322.0
+  [box]
+  type = GeneratedMeshGenerator
+  dim = 3
+  nx = 5
+  ny = 5
+  nz = 5
+  xmin = 0
+  xmax = 10000
+  ymin = 0
+  ymax = 10000
+  zmin = 0.0
+  zmax = 10000
   []
 []
 
@@ -26,22 +26,6 @@
   []
 []
 
-[AuxVariables]
-  [deposition]
-    initial_condition = 0 # no deposition initially
-  []
-[]
-
-[AuxKernels]
-  [deposition_aux]
-    type = VariableTimeIntegrationAux
-    variable_to_integrate = cs137
-    coefficient = 0.01 # Settling velocity in m/min
-    variable = deposition
-    order = 3
-  []
-[]
-
 [Kernels]
   [advection]
     type = STAdvection
@@ -54,15 +38,6 @@
   []
   [time]
     type = MassLumpedTimeDerivative
-    variable = cs137
-  []
-  [settling]
-    type = ConservativeAdvection
-    variable = cs137
-    velocity = '0 0 -0.01' # in m/minute
-  []
-  [decay]
-    type = ADDecay
     variable = cs137
   []
 []
@@ -87,20 +62,19 @@
     type = ADDepositionBC
     variable = cs137
     boundary = '1'
-    settling_velocity = 0.01 # in meters per minute
+    settling_velocity = 0.001 # in meters per minute
   []
 []
 
 [Materials]
   [plume]
-    type = GenericCaribouMaterial
-    u_file_name = u.csv
-    v_file_name = v.csv
-    w_file_name = w.csv
-    dim_file_name = coords.csv
+    type = Air
+    use_velocity = true
+    velocity_file_name = "wind_velocity_data.csv"
     diffusivity = 1.0 # needs to be in meters
     decay_constant = 7.285e-10 # needs to be in minutes
     settling_velocity = -0.001 # needs to be in meters per minute
+    num_time_points = 3 # must match wind data csv file
     outputs = exodus
   []
 []
@@ -108,8 +82,8 @@
 [Executioner]
   type = Transient
   solve_type = 'NEWTON'
-  num_steps = 480
-  dt = 60 # minutes
+  num_steps = 10
+  dt = 1 # minutes
   automatic_scaling = true
   petsc_options_iname = '-pc_type -pc_hypre_type'
   petsc_options_value = 'hypre boomeramg'

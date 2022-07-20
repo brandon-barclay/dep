@@ -46,11 +46,6 @@
 []
 
 [Materials]
-  [Air]
-    type = Air
-    decay_constant = 0.1
-    settling_velocity = 0.1
-  []
   [generic]
     type = ADGenericConstantMaterial
     prop_names = 'thermal_conductivity'

@@ -1,6 +1,5 @@
 # include "Air.h"
-// # include <moose/libmesh/boost/algorithm/string/split.hpp>
-# include <fstream>
+# include "csv.h"
 
 registerMooseObject("depApp", Air);
 
@@ -23,8 +22,6 @@ Air::validParams()
 
   params.addParam<bool>("use_velocity", false, "Use time dependent velocity values");
 
-  params.addParam<Real>("num_time_points", 0, "number of time steps in wind data");
-
   return params;
 }
 
@@ -35,52 +32,13 @@ Air::Air(const InputParameters & params)
     _settling_velocity(declareProperty<Real>("settling_velocity")),
     _velocity(declareProperty<RealVectorValue>("velocity")),
     _wind_data(),
-    _current_index(0),
+    _current_index(1),
     _use_velocity(getParam<bool>("use_velocity"))
+
 {
-  if( _use_velocity ) {
-    _num_time_points = getParam<Real>("num_time_points");
+  if( _use_velocity ){
     _velocity_file_name = getParam<std::string>("velocity_file_name");
-    _wind_data = {};
-    std::ifstream file( _velocity_file_name );
-    std::string line = "";
-    getline( file, line ); // should remove header //
-    int i = 0;
-    while( i < _num_time_points ) {
-      getline( file, line );
-      i++;
-      std::cout << "while loop outer" << std::endl;
-
-
-      std::vector<std::string> split_line = {};
-      std::string delimiter = " ";
-      std::size_t pos = 0;
-      std::string token;
-
-      while ((pos = line.find(delimiter)) != std::string::npos) {
-        std::cout << "while loop inner" << std::endl ;
-        token = line.substr(0, pos);
-        split_line.push_back( token );
-        line.erase(0, pos + delimiter.length());
-      }
-
-      std::vector<double> split_line_double = {};
-
-      for( auto elem : split_line ) {
-        auto num = std::stod( elem );
-        split_line_double.push_back( num );
-      }
-      std::cout << std::endl ;
-
-      _wind_data.push_back( split_line_double );
-    }
-    for( auto elem : _wind_data ) {
-      for( auto el : elem ) {
-        std::cout << el << "\t" ;
-        }
-        std::cout << std::endl;
-    }
-    file.close();
+    _wind_data = get_wind_data(_velocity_file_name);
   }
 }
 
@@ -93,16 +51,30 @@ Air::computeQpProperties()
 
   if( _use_velocity )
   {
-    while( _t >= _wind_data[_current_index + 1][0] )
+    while( _t > _wind_data[_current_index][0] )
     {
       _current_index++;
     }
-    auto vel_x =  _wind_data[_current_index][1] ;
-    auto vel_y =  _wind_data[_current_index][2] ;
-    auto vel_z =  _wind_data[_current_index][3] ;
+    auto vel_x = ( _wind_data[_current_index][1] + _wind_data[_current_index - 1][1] ) / 2 ;
+    auto vel_y = ( _wind_data[_current_index][2] + _wind_data[_current_index - 1][2] ) / 2 ;
+    auto vel_z = ( _wind_data[_current_index][3] + _wind_data[_current_index - 1][3] ) / 2 ;
     _velocity[_qp] = { vel_x, vel_y, vel_z };
   }
   else {
     _velocity[_qp] = {0, 0, 0};
   }
+}
+
+std::vector<std::vector<double>> get_wind_data(std::string filename)
+{
+  std::vector<std::vector<double>> velocities = {};
+  io::CSVReader<4> in(filename);
+  in.read_header(io::ignore_no_column, "Time", "X_vel", "Y_vel", "Z_vel" );
+  double t, x, y, z = 0;
+  while(in.read_row(t, x, y, z))
+  {
+    std::vector<double> temp = {t,x,y,z} ;
+    velocities.push_back(temp);
+  }
+  return velocities;
 }

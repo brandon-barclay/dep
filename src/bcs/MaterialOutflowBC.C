@@ -12,7 +12,7 @@ MaterialOutflowBC::validParams()
 
 MaterialOutflowBC::MaterialOutflowBC(const InputParameters & parameters)
   : IntegratedBC(parameters),
-    _velocity(getMaterialProperty<RealVectorValue>("material_velocity"))
+    _velocity(getMaterialProperty<RealVectorValue>("velocity"))
 {
 }
 

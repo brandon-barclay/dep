@@ -43,6 +43,7 @@
   [Air]
     type = Air
     decay_constant = 0.1
+    use_velocity = false
   []
 []
 

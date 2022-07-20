@@ -39,7 +39,7 @@ validParams<STAdvection>()
 
 STAdvection::STAdvection(const InputParameters & parameters)
   : Kernel(parameters),
-    _velocity(getMaterialProperty<RealVectorValue>("material_velocity")), // THIS IS THE IMPORTANT LINE OF THIS CLASS //
+    _velocity(getMaterialProperty<RealVectorValue>("velocity")), // THIS IS THE IMPORTANT LINE OF THIS CLASS //
     _upwinding(getParam<MooseEnum>("upwinding_type").getEnum<UpwindingType>()),
     _u_nodal(_var.dofValues()),
     _upwind_node(0),
