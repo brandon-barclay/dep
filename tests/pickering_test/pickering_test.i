@@ -89,19 +89,20 @@
   [plume]
     type = Air
     use_velocity = true
-    velocity_file_name = "converted_chernobyl_wind_data.csv"
+    velocity_file_name = "converted_pickering_wind_data.csv"
     diffusivity = 1.0 # needs to be in meters
     decay_constant = 7.285e-10 # needs to be in minutes
     settling_velocity = -0.01 # needs to be in meters per minute
     num_time_points = 360 # must match wind data csv file
+    #outputs = exodus
   []
 []
 
 [Executioner]
   type = Transient
   solve_type = 'NEWTON'
-  num_steps = 576
-  dt =  5 # minutes
+  num_steps = 500
+  dt = 60 # minutes
   automatic_scaling = true
   petsc_options_iname = '-pc_type -pc_hypre_type'
   petsc_options_value = 'hypre boomeramg'
