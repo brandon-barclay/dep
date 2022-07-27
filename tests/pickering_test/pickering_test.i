@@ -2,15 +2,15 @@
   [box]
   type = GeneratedMeshGenerator
   dim = 3
-  nx = 100
-  ny = 100
+  nx = 125
+  ny = 125
   nz = 30
   xmin = 0
-  xmax = 25000
+  xmax = 50000
   ymin = 0
-  ymax = 25000
+  ymax = 50000
   zmin = 0.0
-  zmax = 500
+  zmax = 1000
   []
 []
 

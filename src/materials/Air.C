@@ -42,6 +42,7 @@ Air::Air( const InputParameters & params )
     _use_velocity( getParam<bool>( "use_velocity" ) )
 {
   if ( _use_velocity )
+  // split this into a function for readability //
   {
     _num_time_points = getParam<Real>( "num_time_points" );
     _velocity_file_name = getParam<std::string>( "velocity_file_name" );
