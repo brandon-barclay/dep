@@ -4,11 +4,11 @@
   dim = 3
   nx = 100
   ny = 100
-  nz = 30
+  nz = 10
   xmin = 0
-  xmax = 25000
+  xmax = 50000
   ymin = 0
-  ymax = 25000
+  ymax = 50000
   zmin = 0.0
   zmax = 500
   []
@@ -67,7 +67,7 @@
     type = PieceWisePointSource
     rates = '1.1e11 0' # in Bq/m^3? In mol/m^3?
     activation_times = '0.0 18000' # minutes
-    point = '12500 12500 35'
+    point = '25000 25000 35'
   []
 []
 
@@ -89,11 +89,11 @@
   [plume]
     type = Air
     use_velocity = true
-    velocity_file_name = "converted_chernobyl_wind_data.csv"
+    velocity_file_name = "converted_chernobyl_wind_data_new.csv"
     diffusivity = 1.0 # needs to be in meters
     decay_constant = 7.285e-10 # needs to be in minutes
     settling_velocity = -0.1 # needs to be in meters per minute
-    num_time_points = 3 # must match wind data csv file
+    num_time_points = 21 # must match wind data csv file
   []
 []
 
@@ -106,6 +106,7 @@
   petsc_options_iname = '-pc_type -pc_hypre_type'
   petsc_options_value = 'hypre boomeramg'
 []
+
 
 [Outputs]
   execute_on = 'timestep_end'

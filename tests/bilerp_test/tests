@@ -1,0 +1,7 @@
+[Tests]
+  [bilerp_test]
+    type = 'Exodiff'
+    input = 'bilerp_test.i'
+    exodiff = 'bilerp_test_out.e'
+  []
+[]

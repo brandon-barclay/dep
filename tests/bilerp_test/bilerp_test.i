@@ -2,15 +2,15 @@
   [box]
   type = GeneratedMeshGenerator
   dim = 3
-  nx = 5
-  ny = 5
-  nz = 5
+  nx = 25
+  ny = 25
+  nz = 1
   xmin = 0
-  xmax = 10000
+  xmax = 3
   ymin = 0
-  ymax = 10000
+  ymax = 3
   zmin = 0.0
-  zmax = 10000
+  zmax = 3
   []
 []
 
@@ -42,16 +42,6 @@
   []
 []
 
-[DiracKernels]
-  [srce]
-    variable = cs137
-    type = PieceWisePointSource
-    rates = '1.1e11 0' # in Bq/m^3? In mol/m^3?
-    activation_times = '0.0 12000' # minutes
-    point = '5000 5000 35'
-  []
-[]
-
 [BCs]
   [open]
     type = MaterialOutflowBC
@@ -70,11 +60,17 @@
   [plume]
     type = Air
     use_velocity = true
-    velocity_file_name = "wind_velocity_data.csv"
+    velocity_file_name = "p1_wind_data.csv"
+    velocity_file_name_p2 = "p2_wind_data.csv"
+    location_p1 = '1 1 0'
+    location_p2 = '2 2 0'
+
     diffusivity = 1.0 # needs to be in meters
     decay_constant = 7.285e-10 # needs to be in minutes
     settling_velocity = -0.001 # needs to be in meters per minute
     num_time_points = 2 # must match wind data csv file
+    use_bilerp = true
+
     outputs = exodus
   []
 []
