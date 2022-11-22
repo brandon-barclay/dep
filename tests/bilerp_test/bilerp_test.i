@@ -2,8 +2,8 @@
   [box]
   type = GeneratedMeshGenerator
   dim = 3
-  nx = 25
-  ny = 25
+  nx = 200
+  ny = 200
   nz = 1
   xmin = 0
   xmax = 3
@@ -62,8 +62,8 @@
     use_velocity = true
     velocity_file_name = "p1_wind_data.csv"
     velocity_file_name_p2 = "p2_wind_data.csv"
-    location_p1 = '1 1 0'
-    location_p2 = '2 2 0'
+    location_p2 = '0.5 0.5 0'
+    location_p1 = '2.5 2.5 0'
 
     diffusivity = 1.0 # needs to be in meters
     decay_constant = 7.285e-10 # needs to be in minutes
